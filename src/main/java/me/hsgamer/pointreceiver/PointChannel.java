@@ -1,27 +1,25 @@
 package me.hsgamer.pointreceiver;
 
 import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteStreams;
-import me.hsgamer.hscore.bukkit.channel.Channel;
+import me.hsgamer.hscore.bukkit.channel.BungeeSubChannel;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.util.List;
 
-public class PointChannel extends Channel {
+public class PointChannel extends BungeeSubChannel {
     public PointChannel(Plugin plugin) {
-        super("point:receive", plugin);
+        super("PointReceiver", plugin);
     }
 
     @Override
-    public void handleMessage(Player player, byte[] data) {
+    public void handleSubChannelMessage(Player player, ByteArrayDataInput dataInput) {
         player.sendMessage("Received Points");
         System.out.println("Received Points for " + player.getName());
-        ByteArrayDataInput input = ByteStreams.newDataInput(data);
-        String serverName = input.readUTF();
-        String playerName = input.readUTF();
-        String point = input.readUTF();
+        String serverName = dataInput.readUTF();
+        String playerName = dataInput.readUTF();
+        String point = dataInput.readUTF();
 
         List<String> commands = getPlugin().getConfig().getStringList("give-commands");
         commands.replaceAll(s ->
