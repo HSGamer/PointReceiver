@@ -1,0 +1,5 @@
+name: PointReceiver
+version: ${project.version}
+main: me.hsgamer.pointreceiver.PointReceiver
+api-version: 1.13
+authors: [ HSGamer ]
