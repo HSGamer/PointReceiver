@@ -15,11 +15,10 @@ public class PointChannel extends BungeeSubChannel {
 
     @Override
     public void handleSubChannelMessage(Player player, ByteArrayDataInput dataInput) {
-        player.sendMessage("Received Points");
-        System.out.println("Received Points for " + player.getName());
         String serverName = dataInput.readUTF();
         String playerName = dataInput.readUTF();
         String point = dataInput.readUTF();
+        System.out.println(String.join(" - ", serverName, playerName, point));
 
         List<String> commands = getPlugin().getConfig().getStringList("give-commands");
         commands.replaceAll(s ->
