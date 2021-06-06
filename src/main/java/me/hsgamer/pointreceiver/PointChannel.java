@@ -15,9 +15,11 @@ public class PointChannel extends BungeeSubChannel {
 
     @Override
     public void handleSubChannelMessage(Player player, ByteArrayDataInput dataInput) {
-        String serverName = dataInput.readUTF();
-        String playerName = dataInput.readUTF();
-        String point = dataInput.readUTF();
+        String data = dataInput.readUTF();
+        String[] split = data.split("\\|", 3);
+        String serverName = split[0];
+        String playerName = split[1];
+        String point = split[2];
 
         String debug = String.join(" - ", serverName, playerName, point);
         Bukkit.getConsoleSender().sendMessage(debug);
