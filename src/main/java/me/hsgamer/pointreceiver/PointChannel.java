@@ -21,10 +21,6 @@ public class PointChannel extends BungeeSubChannel {
         String playerName = split[1];
         String point = split[2];
 
-        String debug = String.join(" - ", serverName, playerName, point);
-        Bukkit.getConsoleSender().sendMessage(debug);
-        System.out.println(debug);
-
         List<String> commands = getPlugin().getConfig().getStringList("give-commands");
         commands.replaceAll(s ->
                 s.replace("{server}", serverName)
