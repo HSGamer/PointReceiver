@@ -40,6 +40,13 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <minimizeJar>true</minimizeJar>
+                            <relocations>
+                                <relocation>
+                                    <pattern>me.hsgamer.hscore</pattern>
+                                    <shadedPattern>me.hsgamer.pointreceiver.core</shadedPattern>
+                                </relocation>
+                            </relocations>
                         </configuration>
                     </execution>
                 </executions>
@@ -66,6 +73,10 @@
             <id>codemc-repo</id>
             <url>https://repo.codemc.io/repository/maven-public/</url>
         </repository>
+        <repository>
+            <id>codemc-repo</id>
+            <url>https://repo.codemc.io/repository/maven-public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -79,6 +90,16 @@
             <groupId>me.HSGamer</groupId>
             <artifactId>HSCore-bukkit-channel</artifactId>
             <version>3.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>me.HSGamer</groupId>
+            <artifactId>HSCore-bukkit-config</artifactId>
+            <version>3.17</version>
+        </dependency>
+        <dependency>
+            <groupId>me.HSGamer</groupId>
+            <artifactId>HSCore-common</artifactId>
+            <version>3.17</version>
         </dependency>
     </dependencies>
 </project>
