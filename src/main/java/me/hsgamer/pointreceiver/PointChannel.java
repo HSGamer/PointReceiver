@@ -1,6 +1,7 @@
 package me.hsgamer.pointreceiver;
 
 import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteStreams;
 import me.hsgamer.hscore.bukkit.channel.BungeeSubChannel;
 import me.hsgamer.hscore.common.CollectionUtils;
 import org.bukkit.Bukkit;
@@ -37,7 +38,7 @@ public class PointChannel extends BungeeSubChannel implements Listener {
                 int i = Integer.parseInt(String.valueOf(point));
                 playerPoints.put(name, i);
             } catch (Exception e) {
-                getPlugin().getLogger().log(Level.WARNING, "Failed to load player point: " + name, e);
+                getPlugin().getLogger().log(Level.WARNING, e, () -> "Failed to load player point: " + name);
             }
         });
         Bukkit.getPluginManager().registerEvents(this, getPlugin());
@@ -52,23 +53,6 @@ public class PointChannel extends BungeeSubChannel implements Listener {
         playerPoints.forEach(storageConfig::set);
         storageConfig.save();
         playerPoints.clear();
-    }
-
-    @Override
-    public void handleSubChannelMessage(Player player, ByteArrayDataInput dataInput) {
-        String data = dataInput.readUTF();
-        String[] split = data.split("\\|", 3);
-        String serverName = split[0];
-        String playerName = split[1];
-        int point;
-        try {
-            point = Integer.parseInt(split[2]);
-        } catch (Exception e) {
-            getPlugin().getLogger().log(Level.WARNING, e, () -> "Failed to parse point: " + split[2] + " for " + playerName);
-            return;
-        }
-        playerPoints.merge(playerName, point, Integer::sum);
-        getPlugin().getLogger().info(() -> "Received point: " + point + " for " + playerName + " from server " + serverName);
     }
 
     @EventHandler
@@ -86,5 +70,23 @@ public class PointChannel extends BungeeSubChannel implements Listener {
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
                     }
                 });
+    }
+
+    @Override
+    public void handleSubChannelMessage(Player player, byte[] data) {
+        ByteArrayDataInput dataInput = ByteStreams.newDataInput(data);
+        String value = dataInput.readUTF();
+        String[] split = value.split("\\|", 3);
+        String serverName = split[0];
+        String playerName = split[1];
+        int point;
+        try {
+            point = Integer.parseInt(split[2]);
+        } catch (Exception e) {
+            getPlugin().getLogger().log(Level.WARNING, e, () -> "Failed to parse point: " + split[2] + " for " + playerName);
+            return;
+        }
+        playerPoints.merge(playerName, point, Integer::sum);
+        getPlugin().getLogger().info(() -> "Received point: " + point + " for " + playerName + " from server " + serverName);
     }
 }

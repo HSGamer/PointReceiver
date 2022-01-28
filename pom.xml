@@ -85,17 +85,17 @@
         <dependency>
             <groupId>me.HSGamer</groupId>
             <artifactId>HSCore-bukkit-channel</artifactId>
-            <version>3.5-SNAPSHOT</version>
+            <version>3.19</version>
         </dependency>
         <dependency>
             <groupId>me.HSGamer</groupId>
             <artifactId>HSCore-bukkit-config</artifactId>
-            <version>3.17</version>
+            <version>3.19</version>
         </dependency>
         <dependency>
             <groupId>me.HSGamer</groupId>
             <artifactId>HSCore-common</artifactId>
-            <version>3.17</version>
+            <version>3.19</version>
         </dependency>
     </dependencies>
 </project>
