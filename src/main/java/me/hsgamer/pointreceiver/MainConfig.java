@@ -13,7 +13,7 @@ public class MainConfig extends BukkitConfig {
     @Override
     public void setup() {
         super.setup();
-        addDefault("give-commands", Collections.singletonList("point add {player} {amount}"));
+        addDefault("give-commands", Collections.singletonList("points add {player} {point}"));
         save();
     }
 }
