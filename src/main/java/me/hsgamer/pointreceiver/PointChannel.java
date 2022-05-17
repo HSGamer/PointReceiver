@@ -3,7 +3,6 @@ package me.hsgamer.pointreceiver;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 import me.hsgamer.hscore.bukkit.channel.BungeeSubChannel;
-import me.hsgamer.hscore.common.CollectionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -61,10 +60,11 @@ public class PointChannel extends BungeeSubChannel implements Listener {
         Optional.ofNullable(playerPoints.remove(name))
                 .filter(point -> point > 0)
                 .ifPresent(point -> {
-                    List<String> commands = CollectionUtils.createStringListFromObject(mainConfig.get("give-commands"), true);
+                    List<String> commands = MainConfig.GIVE_COMMANDS.getValue();
+                    int multipliedPoint = (int) Math.floor(MainConfig.POINT_MULTIPLY.getValue() * point);
                     commands.replaceAll(s -> s
                             .replace("{player}", name)
-                            .replace("{point}", String.valueOf(point))
+                            .replace("{point}", Integer.toString(multipliedPoint))
                     );
                     Bukkit.getScheduler().runTask(getPlugin(), () -> {
                         for (String command : commands) {
