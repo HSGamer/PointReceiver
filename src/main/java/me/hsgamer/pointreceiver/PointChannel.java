@@ -66,11 +66,11 @@ public class PointChannel extends BungeeSubChannel implements Listener {
                             .replace("{player}", name)
                             .replace("{point}", Integer.toString(multipliedPoint))
                     );
-                    Bukkit.getScheduler().runTask(getPlugin(), () -> {
+                    Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
                         for (String command : commands) {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
                         }
-                    });
+                    }, MainConfig.COMMAND_DELAY.getValue());
                 });
     }
 

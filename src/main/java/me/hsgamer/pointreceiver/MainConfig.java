@@ -6,6 +6,7 @@ import me.hsgamer.hscore.config.BaseConfigPath;
 import me.hsgamer.hscore.config.ConfigPath;
 import me.hsgamer.hscore.config.PathableConfig;
 import me.hsgamer.hscore.config.path.DoubleConfigPath;
+import me.hsgamer.hscore.config.path.IntegerConfigPath;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Collections;
@@ -18,6 +19,7 @@ public class MainConfig extends PathableConfig {
             o -> CollectionUtils.createStringListFromObject(o, true)
     );
     public static final DoubleConfigPath POINT_MULTIPLY = new DoubleConfigPath("point-multiply", 1.0);
+    public static final IntegerConfigPath COMMAND_DELAY = new IntegerConfigPath("command-delay", 5);
 
     public MainConfig(Plugin plugin) {
         super(new BukkitConfig(plugin, "config.yml"));
